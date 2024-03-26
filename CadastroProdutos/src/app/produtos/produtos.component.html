@@ -1,34 +1,58 @@
 <div class="container">
-    <div class="row">
-      <div class="col-4 bg-light m-auto">
-        <h1 class="text-center">Cadastro de Produtos</h1>
-        <form>
-          <div class="mb-3 row">
-            <div class="col">
-              <label for="id" class="form-label">ID</label>
-              <input type="text" class="form-control" id="id" name="id">
-            </div>
-            <div class="col">
-              <label for="nome" class="form-label">Nome</label>
-              <input type="text" class="form-control" id="nome" name="nome">
-            </div>
+  <div class="row">
+    <div class="col-4 bg-light m-auto">
+      <h1 class="text-center">Cadastro de Produtos</h1>
+      <form (ngSubmit)="salvarProduto()">
+        <div class="mb-3 row">
+          <div class="col">
+            <label for="id" class="form-label">ID</label>
+            <input type="text" class="form-control" id="id" name="id" [(ngModel)]="produto.id">
           </div>
-          <div class="mb-3">
-            <label for="descricao" class="form-label">Descrição</label>
-            <textarea class="form-control" id="descricao" name="descricao" rows="3"></textarea>
+          <div class="col">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="produto.nome">
           </div>
-          <div class="mb-3 row">
-            <div class="col">
-              <label for="preco" class="form-label">Preço</label>
-              <input type="text" class="form-control" id="preco" name="preco">
-            </div>
-            <div class="col">
-              <label for="quantidade" class="form-label">Quantidade</label>
-              <input type="text" class="form-control" id="quantidade" name="quantidade">
-            </div>
+        </div>
+        <div class="mb-3">
+          <label for="descricao" class="form-label">Descrição</label>
+          <textarea class="form-control" id="descricao" name="descricao" rows="3" [(ngModel)]="produto.descricao"></textarea>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <label for="preco" class="form-label">Preço</label>
+            <input type="number" class="form-control" id="preco" name="preco" [(ngModel)]="produto.preco">
           </div>
-          <button type="submit" class="btn btn-primary btn-block">Salvar</button>
-        </form>
-      </div>
+          <div class="col">
+            <label for="quantidade" class="form-label">Quantidade</label>
+            <input type="number" class="form-control" id="quantidade" name="quantidade" [(ngModel)]="produto.quantidade">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+      </form>
     </div>
   </div>
+</div>
+
+<div class="container mt-4">
+  <h2>Todos os Produtos</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th>Quantidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let produto of produtos">
+        <td>{{ produto.id }}</td>
+        <td>{{ produto.nome }}</td>
+        <td>{{ produto.descricao }}</td>
+        <td>{{ produto.preco | currency }}</td>
+        <td>{{ produto.quantidade }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
