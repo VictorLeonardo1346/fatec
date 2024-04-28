@@ -42,6 +42,7 @@
             <th scope="col">matricula</th>
             <th scope="col">Nome</th>
             <th scope="col">Curso</th>
+            <th class="d-flex justify-content-end" scope="col">Opções</th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +50,10 @@
             <th scope="row">{{ student.id }}</th>
             <td>{{ student.name }}</td>
             <td>{{ student.course }}</td>
+            <td class="d-flex justify-content-end">
+              <button class="btn btn-danger me-2" (click)="delete(student)">Remover</button>
+              <button class="btn btn-primary" (click)="edit(student)">Alterar</button>
+            </td>
           </tr>
         </tbody>
       </table>
