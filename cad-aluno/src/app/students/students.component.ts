@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Student } from '../students';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentService } from '../student.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class StudentsComponent implements OnInit{
   students: Student[] = [];
   formGroupStudent : FormGroup;
   isEditing: boolean = false;
+  submited: boolean = false;
   
   
   ngOnInit(): void {
@@ -30,8 +31,8 @@ export class StudentsComponent implements OnInit{
    ){
     this.formGroupStudent = FormBuilder.group({
       id: [''],
-      name : [''],
-      course: [''],
+      name : ['', [Validators.minLength(3),Validators.required]],
+      course: ['', [Validators.required]]
     
     });
   
@@ -39,22 +40,30 @@ export class StudentsComponent implements OnInit{
   
 
   save(){
+    this.submited = true;
+    
+    if(this.formGroupStudent.valid){
     if(this.isEditing){
       this.service.update(this.formGroupStudent.value).subscribe({
         next : () => {
           this.loadStudents();
           this.isEditing = false;
+          this.submited = false;
         }
       })
     }
     else{
 
     this.service.save(this.formGroupStudent.value).subscribe({
-      next: data => this.students.push(data)
+      next: data => {
+        this.students.push(data);
+        this.submited = false;
+      } 
     });
     
   }
   this.formGroupStudent.reset();
+ }
 }
 
   delete(student:Student){
@@ -68,5 +77,12 @@ export class StudentsComponent implements OnInit{
     this.formGroupStudent.setValue(student);
   }
 
+  get name(): any {
+    return this.formGroupStudent.get("name");
+  }
+
+  get course(): any {
+    return this.formGroupStudent.get("course");
+  }
 }
 

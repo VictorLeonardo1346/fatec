@@ -27,7 +27,7 @@ export class StudentService {
   }
 
   update(student:Student): Observable<Student>{
-    return this.http.put<Student>(`${this.url}/${student.id}`, student)
+    return this.http.put<Student>(`${this.url}/${student.id}`, student);
   }
 
 
